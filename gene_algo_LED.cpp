@@ -51,7 +51,7 @@ float *tristimulus_memory;
 
 int main()
 {
-    initwindow(getmaxwidth( ), getmaxheight( )); //繪圖小黑窗最大化
+    initwindow(getmaxwidth( ), getmaxheight( ));
 	settextstyle(0,0,2);
     srand(time(NULL));
     temp1=CIE_excel_fileopen(CIE_1931);
@@ -62,13 +62,13 @@ int main()
    float *matrix2 = Matrix_randon(L_Population,L_genes,2);
    for(i=0; i<n_chromosomes; i++){
             for(j=0;j<LED_genes;j++)
-            LED_Population[i][j]=*(matrix + (i * LED_genes) + j); // LED 染色體基因
+            LED_Population[i][j]=*(matrix + (i * LED_genes) + j); // LED chromosome-gene
 
             for(k=0;k<S_genes;k++)
-            S_Population[i][k]=*(matrix1 + (i * S_genes) + k+i);  // YAG短波長 染色體基因
+            S_Population[i][k]=*(matrix1 + (i * S_genes) + k+i);  // YAG short wavelength chromosome-gene
 
             for(s=0;s<L_genes;s++)
-            L_Population[i][s]=*(matrix2 + (i * L_genes) + s+i);  // YAG長波長 染色體基因
+            L_Population[i][s]=*(matrix2 + (i * L_genes) + s+i);  // YAG long wavelength chromosome-gene
     }
 
     for(i=0;i<n_chromosomes;i++){
@@ -83,7 +83,7 @@ int main()
             SL[i]=Amp_SL(chromosome,CIE_1931[i][0]);
   }
 
-   tristimulus_memory=tristimulus_value(CIE_1931,SLED);// 藍光刺激值& x y座標回傳
+   tristimulus_memory=tristimulus_value(CIE_1931,SLED);// LED tristimulus values & x y coordinate feedfack
     XLED=*(tristimulus_memory);
     YLED=*(tristimulus_memory+1);
     ZLED=*(tristimulus_memory+2);
@@ -94,7 +94,7 @@ int main()
 
 
 
-   tristimulus_memory=tristimulus_value(CIE_1931,Ss);// YAG短光波長刺激值& x y座標回傳
+   tristimulus_memory=tristimulus_value(CIE_1931,Ss);// YAG tristimulus values & x y coordinate feedfack
     Xs=*(tristimulus_memory);
     Ys=*(tristimulus_memory+1);
     Zs=*(tristimulus_memory+2);
@@ -104,7 +104,7 @@ int main()
     printf("ys=%f\n",ys);
 
 
-   tristimulus_memory=tristimulus_value(CIE_1931,SL);// YAG長光波長刺激值& x y座標回傳
+   tristimulus_memory=tristimulus_value(CIE_1931,SL);// YAG tristimulus values & x y coordinate feedfack
     XL=*(tristimulus_memory);
     YL=*(tristimulus_memory+1);
     ZL=*(tristimulus_memory+2);
