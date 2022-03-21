@@ -6,7 +6,7 @@ float ASL_array[2];
 
 
 
-float Amp_LED(float params[], float lambda) // 藍光S(lambda)
+float Amp_LED(float params[], float lambda) // blue light S(lambda)
 {
     float a,b,c;
 
@@ -18,16 +18,16 @@ float Amp_LED(float params[], float lambda) // 藍光S(lambda)
             z=a/(b+c);
     return (z);
 }
-float Amp_SL(float params[] ,float lambda)// 長短波長S(lambda)
+float Amp_SL(float params[] ,float lambda)// Long & short wavelength S(lambda)
 {
 
 
     float a,b;
     float z;
 
-    a=pow((params[0]/lambda),2);//2.105
+    a=pow((params[0]/lambda),2);
 
-    b=pow((lambda-params[0])/(lambda*params[1]),2);//-171.354/1393/0.0137
+    b=pow((lambda-params[0])/(lambda*params[1]),2);
 
     z=a*exp(-b);
 
@@ -38,7 +38,7 @@ float Amp_SL(float params[] ,float lambda)// 長短波長S(lambda)
 
 float *Apsl(float xc,float yc,float XB,float YB,float ZB,float XS,float YS,float ZS,float XL,float YL,float ZL)
 {
-    // Aps Apl 計算(與藍光比值)
+    // Aps Apl
 
 
     float a,b,c,d,e,f;
