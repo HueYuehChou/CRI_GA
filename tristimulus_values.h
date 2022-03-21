@@ -17,17 +17,17 @@ float *tristimulus_value(float CIE1931[CIE1931_length][CIE1931_width],float S[CI
 
 
 
-    int n=CIE_calculation_range;//將區間劃分成401份
-    float h=(upper_limit+1-lower_limit)/n;//h是每個區間分大小
+    int n=CIE_calculation_range;//401 intervals
+    float h=(upper_limit+1-lower_limit)/n;//the width of interval
     printf("---------------------\n");
 
 
        std::fill_n(tristimulus_array, 3, 0);
 
        for(i=0;i<CIE_calculation_range;i++){
-       tristimulus_array[0] += (683*S[i]*CIE1931[i][1]*h); // 刺激值X 積分黎曼合
-       tristimulus_array[1] += (683*S[i]*CIE1931[i][2]*h); // 刺激值Y 積分黎曼合
-       tristimulus_array[2] += (683*S[i]*CIE1931[i][3]*h); // 刺激值Z 積分黎曼合
+       tristimulus_array[0] += (683*S[i]*CIE1931[i][1]*h); // tristimulus value X Riemann Sum
+       tristimulus_array[1] += (683*S[i]*CIE1931[i][2]*h); // tristimulus value Y Riemann Sum
+       tristimulus_array[2] += (683*S[i]*CIE1931[i][3]*h); // tristimulus value Z Riemann Sum
        }
 
 
@@ -35,8 +35,8 @@ float *tristimulus_value(float CIE1931[CIE1931_length][CIE1931_width],float S[CI
        float Y=tristimulus_array[1];
        float Z=tristimulus_array[2];
 
-       float x=X/(X+Y+Z); //座標x
-       float y=Y/(X+Y+Z); //座標y
+       float x=X/(X+Y+Z); //x-coordinate
+       float y=Y/(X+Y+Z); //y-coordinate
        printf("X=%f\n",X);
        printf("Y=%f\n",Y);
        printf("Z=%f\n",Z);
