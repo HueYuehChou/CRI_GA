@@ -13,7 +13,7 @@ double Spectrum2XYZ(int chrosome,int wavelength_interval,int data_length,int dat
 
        }
       }
-        for(int i=0;i<data_length;i++){
+       /* for(int i=0;i<data_length;i++){
         for(int j=0;j<1;j++){
             printf("%f\t",S[i][j]);
             printf("%f\t",CIE1931[i][1]);
@@ -23,7 +23,7 @@ double Spectrum2XYZ(int chrosome,int wavelength_interval,int data_length,int dat
         printf("\n");
 
 
-        }
+        }*/
         printf("----------------------------------------------------------------------------------------------------\n");
 
  for(int j=0;j<chrosome;j++){

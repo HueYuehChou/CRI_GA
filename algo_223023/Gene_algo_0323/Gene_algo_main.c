@@ -7,6 +7,7 @@
 #include "Matrix_random.h"
 #include "tristimulus_values.h"
 #include "XYZ2xy.h"
+#include <process.h>
 
 
 int wavelength_upper_limit;
@@ -132,11 +133,6 @@ int main(int argc, const char * argv[]) {
 
 
 
-
-
-
-
-
-
+    system("pause");
     return 0;
 }
