@@ -1,5 +1,5 @@
  #include"tristimulus_values.h"
- #include<math.h>
+
 
 double Spectrum2XYZ(int chrosome,int wavelength_interval,int data_length,int data_width,double CIE1931[data_length][data_width],double S[data_length][chrosome],double tristimulus_array[3][chrosome]){
 

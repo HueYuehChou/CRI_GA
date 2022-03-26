@@ -1,4 +1,3 @@
-#include<math.h>
 #include"Amplitude_Equation.h"
 int Amp_LED(int data_length,int chrosome,int data_width,int LED_genes, double LED_Population[data_length][LED_genes],double CIE1931[data_length][data_width],double S_LED[data_length][chrosome]) // blue light S(lambda)
 {

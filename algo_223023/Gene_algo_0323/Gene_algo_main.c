@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<math.h>
-
+/*
 #include "Amplitude_Equation.h"
 #include "excel_fileopen.h"
 #include "Matrix_random.h"
 #include "tristimulus_values.h"
 #include "XYZ2xy.h"
 #include <process.h>
-
+*/
 
 int wavelength_upper_limit;
 int wavelength_lower_limit;
