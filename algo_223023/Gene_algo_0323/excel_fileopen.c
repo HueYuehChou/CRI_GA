@@ -7,7 +7,7 @@
 
 
 
-int CIE_Excelopen(int argc, const char * argv[],int interval,int CIE_1931_length,int CIE_1931_width,double temp[CIE_1931_length][CIE_1931_width]) {
+int CIE_Excelopen(int argc, const char * argv[],int init_value ,int interval,int CIE_1931_length,int CIE_1931_width,double temp[CIE_1931_length][CIE_1931_width]) {
 
 
     double temp1[535][11];
@@ -45,11 +45,11 @@ int CIE_Excelopen(int argc, const char * argv[],int interval,int CIE_1931_length
         i++;
     }
     int k=0;
-   for(int i=64;i<CIE_1931_length*interval+64;i+=interval){
-            temp[i-64-(interval-1)*k][0]=temp1[i][0];
-            temp[i-64-(interval-1)*k][1]=temp1[i][5];
-            temp[i-64-(interval-1)*k][2]=temp1[i][6];
-            temp[i-64-(interval-1)*k][3]=temp1[i][7];
+   for(int i=init_value-296;i<CIE_1931_length*interval+(init_value-296);i+=interval){
+            temp[i-(init_value-296)-(interval-1)*k][0]=temp1[i][0];
+            temp[i-(init_value-296)-(interval-1)*k][1]=temp1[i][5];
+            temp[i-(init_value-296)-(interval-1)*k][2]=temp1[i][6];
+            temp[i-(init_value-296)-(interval-1)*k][3]=temp1[i][7];
             k++;
 
     }

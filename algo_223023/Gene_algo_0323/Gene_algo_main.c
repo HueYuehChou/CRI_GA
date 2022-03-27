@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<math.h>
-/*
-#include "Amplitude_Equation.h"
-#include "excel_fileopen.h"
-#include "Matrix_random.h"
-#include "tristimulus_values.h"
-#include "XYZ2xy.h"
-#include <process.h>
-*/
+
 
 int wavelength_upper_limit;
 int wavelength_lower_limit;
@@ -36,13 +29,24 @@ int main(int argc, const char * argv[]) {
     scanf("%d",&wavelength_interval);
     data_length=1+(wavelength_upper_limit-wavelength_lower_limit)/wavelength_interval;
     printf("data length=%d\n",data_length);
-    if(wavelength_upper_limit>840||wavelength_lower_limit<290||wavelength_interval>11||data_length<0){
+    if(wavelength_upper_limit>830||wavelength_lower_limit<360||wavelength_interval>11||data_length<0){
         printf("error\n");
         return 0;
     }
 
     double CIE1931[data_length][data_width];
-    CIE_Excelopen(argc, argv,wavelength_interval,data_length,data_width,CIE1931);
+    CIE_Excelopen(argc, argv,wavelength_lower_limit,wavelength_interval,data_length,data_width,CIE1931);
+
+    for(int i=0;i<data_length;i++){
+            printf("%f\t",CIE1931[i][0]);
+            printf("%f\t",CIE1931[i][1]);
+            printf("%f\t",CIE1931[i][2]);
+            printf("%f\t",CIE1931[i][3]);
+
+        printf("\n");
+
+
+        }
 
     double LED_Population[chrosome][LED_genes];
     double s_Population[chrosome][s_genes];

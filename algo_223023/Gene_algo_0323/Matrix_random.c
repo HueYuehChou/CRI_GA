@@ -36,7 +36,7 @@ for(int i=0;i<data_width;i++){
 }
 else if (choice==1)
 {
-    double S_wavelength_min=560, S_wavelength_max=639;  // YAG short wavelength range
+    double S_wavelength_min=500, S_wavelength_max=550;  // YAG short wavelength range
     double Halfwidth_S_min=1;
         for(i=0;i<data_width;i++){
         for(j=0;j<chrosome;j++){
@@ -50,7 +50,7 @@ else if (choice==1)
 
 }
 else{
-    double L_wavelength_min=640, L_wavelength_max=750;  // YAG long wavelength range
+    double L_wavelength_min=551, L_wavelength_max=620;  // YAG long wavelength range
     double Halfwidth_L_min=1;
     for(i=0;i<data_width;i++){
         for(j=0;j<chrosome;j++){
