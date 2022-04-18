@@ -31,26 +31,67 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Amplitude_Equation.c">
+		<Unit filename="Bluerate_APSL.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Amplitude_Equation.h" />
+		<Unit filename="Bluerate_APSL.h" />
+		<Unit filename="CRI.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="CRI.h" />
+		<Unit filename="Delta_Ei.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Delta_Ei.h" />
+		<Unit filename="Excel_fileopen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Excel_fileopen.h" />
+		<Unit filename="Gene_Algorithm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Gene_Algorithm.h" />
 		<Unit filename="Gene_algo_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Illuminant_spectrum.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Illuminant_spectrum.h" />
+		<Unit filename="Iso_therm_line.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Iso_therm_line.h" />
 		<Unit filename="Matrix_random.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Matrix_random.h" />
+		<Unit filename="S_total.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="S_total.h" />
+		<Unit filename="Spectrum_Equation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Spectrum_Equation.h" />
+		<Unit filename="TCS_1nm_data.csv" />
+		<Unit filename="Transform_xyuvcd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Transform_xyuvcd.h" />
+		<Unit filename="Tristimulus_values.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Tristimulus_values.h" />
+		<Unit filename="XYZ2xy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="XYZ2xy.h" />
 		<Unit filename="all_1nm_data.csv" />
-		<Unit filename="excel_fileopen.c">
+		<Unit filename="uv_i_toUVW.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="excel_fileopen.h" />
-		<Unit filename="tristimulus_values.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="tristimulus_values.h" />
+		<Unit filename="uv_i_toUVW.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

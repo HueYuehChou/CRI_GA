@@ -2,6 +2,7 @@
 #include<time.h>
 #include <stdlib.h>
 
+
 double genes_range(double gene_min,double gene_max)
 {
 
@@ -14,52 +15,66 @@ double genes_range(double gene_min,double gene_max)
 }
 
 
-int Matrix_randon(int chrosome,int data_width,int choice,double Population[chrosome][data_width]){
-
-int i,j;
+double Matrix_randon(int chrosome,int data_width,int choice,double Population[chrosome][data_width]){
 
 if(choice==0){
 
-   double LED_wavelength_min=430, LED_wavelength_max=460; // Blue light LED wavelength range
-   double Halfwidth_LED_min=1;
+   double LED_wavelength_min=445, LED_wavelength_max=455; // Blue light LED wavelength range
+
 
 for(int i=0;i<data_width;i++){
         for(int j=0;j<chrosome;j++){
                 if(i==0)// Blue light LED wavelength
                 Population[j][i] = genes_range(LED_wavelength_min,LED_wavelength_max);
                 else if(i==1) // Right FWHM
-                Population[j][i] = genes_range(Halfwidth_LED_min,LED_wavelength_max-LED_wavelength_min);
+                Population[j][i] = genes_range(6,11);
                 else         //Left FWHM
-                Population[j][i] = genes_range(Halfwidth_LED_min,LED_wavelength_max-LED_wavelength_min-Population[j][1]);
+                Population[j][i] = genes_range(8,16);
         }
     }
 }
-else if (choice==1)
+else
 {
-    double S_wavelength_min=500, S_wavelength_max=550;  // YAG short wavelength range
-    double Halfwidth_S_min=1;
-        for(i=0;i<data_width;i++){
-        for(j=0;j<chrosome;j++){
+    double S_wavelength_min=520, S_wavelength_max=570;  // YAG short wavelength range
+
+        for(int i=0;i<data_width;i++){
+        for(int j=0;j<chrosome;j++){
                if(i==0) // YAG short wavelength
                 Population[j][i] = genes_range(S_wavelength_min,S_wavelength_max);
                 else  //FWHM
-                Population[j][i] = genes_range(Halfwidth_S_min,S_wavelength_max-S_wavelength_min);
+                Population[j][i] = genes_range(0.04,0.16);
 
 }
 }
 
 }
-else{
-    double L_wavelength_min=551, L_wavelength_max=620;  // YAG long wavelength range
-    double Halfwidth_L_min=1;
-    for(i=0;i<data_width;i++){
-        for(j=0;j<chrosome;j++){
-                if(i==0)// YAG long wavelength
-                Population[j][i] = genes_range(L_wavelength_min,L_wavelength_max);
+
+}
+double Matrix_randon_Long(int chrosome,int data_width,double S_Population[chrosome][data_width],double Population[chrosome][data_width]){
+
+
+
+    for(int i=0;i<data_width;i++){
+        for(int j=0;j<chrosome;j++){
+                if(i==0){  // YAG long wavelength
+                Population[j][i] =genes_range(S_Population[j][i]/(1-(0.0001)*S_Population[j][i]),S_Population[j][i]/(1-(0.0003102)*S_Population[j][i]));
+
+                }
                 else // FWHM
-                Population[j][i] = genes_range(Halfwidth_L_min,L_wavelength_max-L_wavelength_min);
+                Population[j][i] = genes_range(0.09,0.14);
 
 }
     }
-    }
+
+
+
+}
+
+
+double Iso_therm_dis_rand(int Iso_threm_chrosome,double iso_therm_dis[Iso_threm_chrosome]){
+
+    for(int i=0;i<Iso_threm_chrosome;i++)
+
+    iso_therm_dis[i]=genes_range(-0.0005,0.0005);
+
 }
