@@ -29,7 +29,7 @@ for(int i=0;i<data_width;i++){
                 else if(i==1) // Right FWHM
                 Population[j][i] = genes_range(6,11);
                 else         //Left FWHM
-                Population[j][i] = genes_range(8,16);
+                Population[j][i] = genes_range(13,16);
         }
     }
 }
@@ -42,7 +42,7 @@ else
                if(i==0) // YAG short wavelength
                 Population[j][i] = genes_range(S_wavelength_min,S_wavelength_max);
                 else  //FWHM
-                Population[j][i] = genes_range(0.04,0.16);
+                Population[j][i] = genes_range(0.000138333*Population[j][0]-0.01222315,0.000138333*Population[j][0]+0.06405685);
 
 }
 }
@@ -57,11 +57,12 @@ double Matrix_randon_Long(int chrosome,int data_width,double S_Population[chroso
     for(int i=0;i<data_width;i++){
         for(int j=0;j<chrosome;j++){
                 if(i==0){  // YAG long wavelength
-                Population[j][i] =genes_range(S_Population[j][i]/(1-(0.0001)*S_Population[j][i]),S_Population[j][i]/(1-(0.0003102)*S_Population[j][i]));
+                Population[j][i] =genes_range(S_Population[j][i]/(1.0-(0.0001*S_Population[j][i])),S_Population[j][i]/(1.0-(0.0003102*S_Population[j][i])));
+
 
                 }
                 else // FWHM
-                Population[j][i] = genes_range(0.09,0.14);
+                Population[j][i] = genes_range(-0.00040385*Population[j][0]+0.3463523,-0.00040385*Population[j][0]+0.3766523);
 
 }
     }
@@ -75,6 +76,6 @@ double Iso_therm_dis_rand(int Iso_threm_chrosome,double iso_therm_dis[Iso_threm_
 
     for(int i=0;i<Iso_threm_chrosome;i++)
 
-    iso_therm_dis[i]=genes_range(-0.0005,0.0005);
+    iso_therm_dis[i]=genes_range(-0.0054,0.0054);
 
 }

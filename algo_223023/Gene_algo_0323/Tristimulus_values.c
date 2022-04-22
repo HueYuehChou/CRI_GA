@@ -13,7 +13,8 @@ double Spectrum2XYZ(int wavelength_interval,int data_length,int data_width,doubl
        Tristimulus_temp[0] +=683*(S[i]*CIE1931[i][1]*wavelength_interval); // tristimulus value X Riemann Sum
        Tristimulus_temp[1] +=683*(S[i]*CIE1931[i][2]*wavelength_interval); // tristimulus value Y Riemann Sum
        Tristimulus_temp[2] +=683*(S[i]*CIE1931[i][3]*wavelength_interval); // tristimulus value Z Riemann Sum
-      /* printf("%.8f\t",CIE1931[i][1]);
+       /*printf("%.8f\t",CIE1931[i][0]);
+       printf("%.8f\t",CIE1931[i][1]);
         printf("%.8f\t",CIE1931[i][2]);
          printf("%.8f\t",CIE1931[i][3]);
          printf("\n");*/

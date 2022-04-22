@@ -39,12 +39,17 @@ double  Illuminant_Daylight_spectrum(double Tc,double S0,double S1,double S2){
     xD=(-4.0507E9)/(Tc*Tc*Tc)+(2.9678E6)/(Tc*Tc)+(0.09911E3)/(Tc)+0.244063;
     }
     else{
-    xD=(-2.0064E9)/(Tc*Tc*Tc)+(1.9081E6)/(Tc*Tc)+(0.24748E3)/(Tc)+0.23704;
+    xD=(-2.0064E9)/(Tc*Tc*Tc)+(1.9018E6)/(Tc*Tc)+(0.24748E3)/(Tc)+0.23704;
     }
+  //  printf("xD=%f\n",xD);
     double yD=-3*xD*xD+2.873*xD-0.275;
+ //    printf("yD=%f\n",yD);
     double M1=(-1.3515-1.7703*xD+5.9114*yD)/(0.0241+0.2562*xD-0.7341*yD);
+ //    printf("M1=%f\n",M1);
     double M2=(0.03-31.4424*xD+30.0717*yD)/(0.0241+0.2562*xD-0.7341*yD);
+  //   printf("M2=%f\n",M2);
     double S_Daylight=S0+M1*S1+M2*S2;
+
 
     return S_Daylight;
 

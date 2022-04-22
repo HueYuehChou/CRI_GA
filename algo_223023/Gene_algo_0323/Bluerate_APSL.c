@@ -1,4 +1,6 @@
 #include"Bluerate_APSL.h"
+#include <stdlib.h>
+#include<math.h>
 int Bluerate_APSL(double Tristimulus_temp_LED[3],double Tristimulus_temp_S[3],double Tristimulus_temp_L[3],double Illuminant_xy_array[2],double APSL_array[2])
 {
     // Aps Apl
@@ -32,8 +34,8 @@ int Bluerate_APSL(double Tristimulus_temp_LED[3],double Tristimulus_temp_S[3],do
     k=(Tristimulus_temp_LED[0]-(xc*(XYZ_LED)))*(yc*(XYZ_PS)-Tristimulus_temp_S[1]);
 
 
-    APSL_array[0]=(d-e)/(f-g);
-    APSL_array[1]=(h-k)/(f-g);
+    APSL_array[0]=fabs((d-e)/(f-g));
+    APSL_array[1]=fabs((h-k)/(f-g));
 
 
 

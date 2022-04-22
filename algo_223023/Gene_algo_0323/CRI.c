@@ -34,26 +34,26 @@ for(int j=0;j<data_length;j++){
 
    S_Long[j]=Single_spec_phosphors(Long_wavelength,Long_FWHM,CIE1931[j][0]);
 
-  // if(Tc<=5000.0){
+  if(Tc<=5000.0){
    S_illuminant[j]=Illuminant_Planck_spectrum(Tc,CIE1931[j][0]);
- //  }
-  // else{
- //  S_illuminant[j]=Illuminant_Daylight_spectrum(Tc,Daylight_SPD_1nm[j][1],Daylight_SPD_1nm[j][2],Daylight_SPD_1nm[j][3]);
+   }
+  else{
+   S_illuminant[j]=Illuminant_Daylight_spectrum(Tc,Daylight_SPD_1nm[j][1],Daylight_SPD_1nm[j][2],Daylight_SPD_1nm[j][3]);
 
-//   }
+  }
 
    S_illuminant_diff[j]=Illuminant_spectrum_differential(Tc,CIE1931[j][0]);
 
 
          }
-         for(int i=0;i<data_length;i++){
-        for(int j=0;j<TCS_width;j++){
-                printf("%f\t",TCS[i][j]);
+    /*  for(int i=0;i<data_length;i++){
+        for(int j=0;j<4;j++){
+                printf("%f\t",CIE1931[i][j]);
         }
         printf("\n");
-    }
+    }*/
 
-printf("-------------------------------------------Sillu---------------------------------------------\n\n");
+/*printf("-------------------------------------------Sillu---------------------------------------------\n\n");
   for(int k=0;k<data_length;k++){
 
         printf("%.8f\n",S_illuminant[k]);
@@ -77,14 +77,14 @@ printf("-------------------------------------------Sillu------------------------
 
 
    Spectrum2XYZ(wavelength_interval,data_length,data_width,CIE1931,S_illuminant,Tristimulus_temp_illuminant);
-printf("\n");
+ /* printf("\n");
    printf("Xillu  = %.8f\n",Tristimulus_temp_illuminant[0]);
    printf("Yillu  = %.8f\n",Tristimulus_temp_illuminant[1]);
-   printf("Zillu  = %.8f\n\n",Tristimulus_temp_illuminant[2]);
+   printf("Zillu  = %.8f\n\n",Tristimulus_temp_illuminant[2]);*/
    Spectrum2XYZ(wavelength_interval,data_length,data_width,CIE1931,S_illuminant_diff,Tristimulus_temp_illuminant_diff);
- printf("X_diff_illu  = %.8f\n",Tristimulus_temp_illuminant_diff[0]);
+ /*  printf("X_diff_illu  = %.8f\n",Tristimulus_temp_illuminant_diff[0]);
    printf("Y_diff_illu  = %.8f\n",Tristimulus_temp_illuminant_diff[1]);
-   printf("Z_diff_illu  = %.8f\n\n",Tristimulus_temp_illuminant_diff[2]);
+   printf("Z_diff_illu  = %.8f\n\n",Tristimulus_temp_illuminant_diff[2]);*/
 
 
    XYZ2xy(Tristimulus_temp_illuminant,Illuminant_xy_array);
@@ -159,11 +159,11 @@ printf("\n");
 
    Bluerate_APSL(Tristimulus_temp_LED, Tristimulus_temp_S,Tristimulus_temp_L,xy_new,APSL_array);
 
-   printf("APS=%.12f\n",APSL_array[0]);
+  // printf("APS=%.12f\n",APSL_array[0]);
 
 
 
- printf("APL=%.12f\n\n",APSL_array[1]);
+   // printf("APL=%.12f\n\n",APSL_array[1]);
     //  printf("---------------------------------------------------------------------------------------------\n\n");
 
 
@@ -193,7 +193,7 @@ printf("\n");
    /* printf("u = %f\t",S_total_uv_array[0]);
    printf("v = %f\n\n",S_total_uv_array[1]);*/
 
- printf("S_total_X=%f\t",Tristimulus_temp_S_total[0]);
+    /*printf("S_total_X=%f\t",Tristimulus_temp_S_total[0]);
     printf("S_total_Y=%f\t",Tristimulus_temp_S_total[1]);
     printf("S_total_Z=%f\n\n",Tristimulus_temp_S_total[2]);
     printf("S_total_x=%f\t",S_total_xy_array[0]);
@@ -203,14 +203,14 @@ printf("\n");
     printf("S_total_c=%f\t",S_total_cd_array[0]);
     printf("S_total_d=%f\n\n",S_total_cd_array[1]);
 
-   // printf("------------------------------------Illuminant-----------------------------------------\n\n");
+   // printf("------------------------------------Illuminant-----------------------------------------\n\n");*/
 
 
 
 
     uvtocd(Illuminant_uv_array[0],Illuminant_uv_array[1],Illuminant_cd_array);
 
- printf("Illuminant_X=%f\t",Tristimulus_temp_illuminant[0]);
+   /*printf("Illuminant_X=%f\t",Tristimulus_temp_illuminant[0]);
     printf("IlluminantY=%f\t",Tristimulus_temp_illuminant[1]);
     printf("IlluminantZ=%f\n\n",Tristimulus_temp_illuminant[2]);
     printf("Illuminantl_x=%f\t",xy_new[0]);
@@ -218,7 +218,7 @@ printf("\n");
     printf("Illuminant_u=%f\t",uv_new[0]);
     printf("Illuminant_v=%f\n\n",uv_new[1]);
     printf("Illuminant_c=%f\t",Illuminant_cd_array[0]);
-    printf("Illuminant_d=%f\n\n",Illuminant_cd_array[1]);
+    printf("Illuminant_d=%f\n\n",Illuminant_cd_array[1]);*/
 
 
 
@@ -234,7 +234,7 @@ printf("\n");
     cdtouv_prime(S_total_cd_array[0],S_total_cd_array[1],Illuminant_cd_array[0],Illuminant_cd_array[1],Illuminant_cd_array[0],Illuminant_cd_array[1],uv_prime_Illuminant);
 
 
-    printf("S_total_cd_array=%.8f\n\n",S_total_cd_array[0]);
+ /*   printf("S_total_cd_array=%.8f\n\n",S_total_cd_array[0]);
     printf("S_total_cd_array=%.8f\n\n",S_total_cd_array[1]);
     printf("Illuminant_cd_array=%.8f\n\n",Illuminant_cd_array[0]);
     printf("Illuminant_cd_array=%.8f\n\n",Illuminant_cd_array[1]);
@@ -244,34 +244,34 @@ printf("\n");
     printf("u_prime_S_total=%.8f\n\n",uv_prime_S_total[0]);
     printf("v_prime_S_total=%.8f\n\n",uv_prime_S_total[1]);
     printf("u_prime_Illuminant=%.8f\n\n",uv_prime_Illuminant[0]);
-    printf("v_prime_Illuminant=%.8f\n\n",uv_prime_Illuminant[1]);
+    printf("v_prime_Illuminant=%.8f\n\n",uv_prime_Illuminant[1]);*/
 
 
     for(int i=0;i<TCS_width;i++){
 
-     printf("------------------------------------i=%d-----------------------------------------\n\n",i+1);
+     //printf("------------------------------------i=%d-----------------------------------------\n\n",i+1);
 
 
-    printf("TCS_ki_X=%.8f\t",Tristimulus_array_ki_TCS[0][i]);
+    /*printf("TCS_ki_X=%.8f\t",Tristimulus_array_ki_TCS[0][i]);
         printf("TCS_ki_Y=%.8f\t",Tristimulus_array_ki_TCS[1][i]);
-        printf("TCS_ki_Z=%.8f\n\n",Tristimulus_array_ki_TCS[2][i]);
+        printf("TCS_ki_Z=%.8f\n\n",Tristimulus_array_ki_TCS[2][i]);*/
         Tristimulus_temp_TCS_ki[0]=Tristimulus_array_ki_TCS[0][i];
         Tristimulus_temp_TCS_ki[1]=Tristimulus_array_ki_TCS[1][i];
         Tristimulus_temp_TCS_ki[2]=Tristimulus_array_ki_TCS[2][i];
 
-      printf("TCS_ri_X=%.8f\t",Tristimulus_array_ri_TCS[0][i]);
+     /* printf("TCS_ri_X=%.8f\t",Tristimulus_array_ri_TCS[0][i]);
         printf("TCS_ri_Y=%.8f\t",Tristimulus_array_ri_TCS[1][i]);
-        printf("TCS_ri_Z=.8%f\n\n",Tristimulus_array_ri_TCS[2][i]);
+        printf("TCS_ri_Z=.8%f\n\n",Tristimulus_array_ri_TCS[2][i]);*/
         Tristimulus_temp_TCS_ri[0]=Tristimulus_array_ri_TCS[0][i];
         Tristimulus_temp_TCS_ri[1]=Tristimulus_array_ri_TCS[1][i];
         Tristimulus_temp_TCS_ri[2]=Tristimulus_array_ri_TCS[2][i];
 
         XYZ2xy(Tristimulus_temp_TCS_ki,ki_xy_array);
-       printf("TCS_ki_x=.8%f\t",ki_xy_array[0]);
-        printf("TCS_ki_y=%.8f\n\n",ki_xy_array[1]);
+      /* printf("TCS_ki_x=.8%f\t",ki_xy_array[0]);
+        printf("TCS_ki_y=%.8f\n\n",ki_xy_array[1]);*/
         XYZ2xy(Tristimulus_temp_TCS_ri,ri_xy_array);
-       printf("TCS_ri_x=%.8f\t",ri_xy_array[0]);
-        printf("TCS_ri_y=%.8f\n\n",ri_xy_array[1]);
+     //  printf("TCS_ri_x=%.8f\t",ri_xy_array[0]);
+      //  printf("TCS_ri_y=%.8f\n\n",ri_xy_array[1]);
 
         xytouv(ki_xy_array[0],ki_xy_array[1],ki_uv_array);
        /* printf("TCS_ki_u=%.8f\t",ki_uv_array[0]);
@@ -279,36 +279,36 @@ printf("\n");
 
 
         xytouv(ri_xy_array[0],ri_xy_array[1],ri_uv_array);
-      printf("TCS_ri_u=%.8f\t",ri_uv_array[0]);
-        printf("TCS_ri_v=%.8f\n\n",ri_uv_array[1]);
+   //   printf("TCS_ri_u=%.8f\t",ri_uv_array[0]);
+     //   printf("TCS_ri_v=%.8f\n\n",ri_uv_array[1]);
 
         uvtocd(ki_uv_array[0],ki_uv_array[1],ki_cd_array);
         uvtocd(ri_uv_array[0],ri_uv_array[1],ri_cd_array);
-    printf("TCS_ki_c=%.8f\t",ki_cd_array[0]);
-        printf("TCS_ki_d=%.8f\n\n",ki_cd_array[1]);
-        printf("TCS_ri_c=%.8f\t",ri_cd_array[0]);
-        printf("TCS_ri_d=%.8f\n\n",ri_cd_array[1]);
+  // printf("TCS_ki_c=%.8f\t",ki_cd_array[0]);
+       // printf("TCS_ki_d=%.8f\n\n",ki_cd_array[1]);
+    //    printf("TCS_ri_c=%.8f\t",ri_cd_array[0]);
+   //     printf("TCS_ri_d=%.8f\n\n",ri_cd_array[1]);
 
         cdtouv_prime(S_total_cd_array[0],S_total_cd_array[1],Illuminant_cd_array[0],Illuminant_cd_array[1],ki_cd_array[0],ki_cd_array[1],uv_prime_ki);
-       printf("u_prime_ki=%.8f\t",uv_prime_ki[0]);
-        printf("v_prime_ki=%.8f\n\n",uv_prime_ki[1]);
+     //  printf("u_prime_ki=%.8f\t",uv_prime_ki[0]);
+     //   printf("v_prime_ki=%.8f\n\n",uv_prime_ki[1]);
         cdtouv_prime(S_total_cd_array[0],S_total_cd_array[1],Illuminant_cd_array[0],Illuminant_cd_array[1],ri_cd_array[0],ri_cd_array[1],uv_prime_ri);
-      printf("u_prime_ri=%.8f\t",uv_prime_ri[0]);
-        printf("v_prime_ri=%.8f\n\n",uv_prime_ri[1]);
+ //     printf("u_prime_ri=%.8f\t",uv_prime_ri[0]);
+  //      printf("v_prime_ri=%.8f\n\n",uv_prime_ri[1]);
 
 
 
         uv_i_toUVW(Tristimulus_temp_S_total[1],Tristimulus_temp_TCS_ki[1],uv_prime_S_total[0],uv_prime_S_total[1],uv_prime_ki[0],uv_prime_ki[1],S_TCS_UVW_array);
-        printf("U*_S_TCS=%.8f\t",S_TCS_UVW_array[0]);
+     /*   printf("U*_S_TCS=%.8f\t",S_TCS_UVW_array[0]);
         printf("V*_S_TCS=%.8f\t",S_TCS_UVW_array[1]);
-        printf("W*_S_TCS=%.8f\n\n",S_TCS_UVW_array[2]);
+        printf("W*_S_TCS=%.8f\n\n",S_TCS_UVW_array[2]);*/
         uv_i_toUVW(Tristimulus_temp_illuminant[1],Tristimulus_temp_TCS_ri[1],uv_prime_Illuminant[0],uv_prime_Illuminant[1],uv_prime_ri[0],uv_prime_ri[1],S_ILLU_UVW_array);
-       printf("U*_ILLU_TCS=%.8f\t",S_ILLU_UVW_array[0]);
+    /*   printf("U*_ILLU_TCS=%.8f\t",S_ILLU_UVW_array[0]);
         printf("V*_ILLU_TCS=%.8f\t",S_ILLU_UVW_array[1]);
-        printf("W*_ILLU_TCS=%.8f\n\n",S_ILLU_UVW_array[2]);
+        printf("W*_ILLU_TCS=%.8f\n\n",S_ILLU_UVW_array[2]);*/
 
         Ri+=100-4.6*Delta_Ei(S_TCS_UVW_array[0],S_TCS_UVW_array[1],S_TCS_UVW_array[2],S_ILLU_UVW_array[0],S_ILLU_UVW_array[1],S_ILLU_UVW_array[2]);
-      printf("Ri=%.8f\n\n",Delta_Ei(S_TCS_UVW_array[0],S_TCS_UVW_array[1],S_TCS_UVW_array[2],S_ILLU_UVW_array[0],S_ILLU_UVW_array[1],S_ILLU_UVW_array[2]));
+//       printf("Ri=%.8f\n\n",Delta_Ei(S_TCS_UVW_array[0],S_TCS_UVW_array[1],S_TCS_UVW_array[2],S_ILLU_UVW_array[0],S_ILLU_UVW_array[1],S_ILLU_UVW_array[2]));
 
 
 

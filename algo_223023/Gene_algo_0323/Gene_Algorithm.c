@@ -8,14 +8,15 @@
 
 
 double Genes_Algorithm(int data_length,int data_width,int wavelength_interval,int TCS_width,double CIE1931[data_length][data_width],double TCS[data_length][TCS_width],double Daylight_SPD_1nm[data_length][4]) {
-for(double  therm=0;therm<1.0;therm+=1.0){
+ srand(time(NULL));
+for(double  therm=0;therm<46;therm+=1.0){
 
-        double Tc=4000+100.0*therm;
+        double Tc=2500+500.0*therm;
 
-    srand(time(NULL));
 
-    int LED_genes=3,s_genes=2, L_genes=2;
-    int chrosome=1,Genes_number=8;
+
+    int LED_genes=3,s_genes=2, L_genes=2,Survivors,Selection_percentage=30;
+    int chrosome=100,Genes_number=8,Generation=8000;
     double Tc_uv_Slope_const_array[5],Result[chrosome][9];
 
     double LED_Population[chrosome][LED_genes],S_Population[chrosome][s_genes],L_Population[chrosome][L_genes],Iso_therm_dis[chrosome];
@@ -30,30 +31,19 @@ for(double  therm=0;therm<1.0;therm+=1.0){
     double S_LED[data_length],S_short[data_length],S_Long[data_length];
     double CRI,CRI_array[chrosome],Genes[chrosome][8];
 
+    Survivors=chrosome*Selection_percentage/100;
+    /*for(int i=0;i<chrosome;i++){
+        for(int j=0;j<3;j++)
+              printf("%f\t",LED_Population[i][j]);
+        printf("\n");
+    }*/
+
+
+
+
+
 
 for(int i=0;i<chrosome;i++){
-
-
-   //printf("------------------------------------------------------------------------------------------------------------------\n");
-
-
-
-
-
-
-  /* printf("Wavelength_LED = %f\t",LED_Population[i][0]);
-   printf("FWHM_L  = %f\t",LED_Population[i][1]);
-   printf("FWHM_R  = %f\n\n",LED_Population[i][2]);
-
-
-   printf("Wavelength_s   = %f\t",S_Population[i][0]);
-   printf("FWHM_s  = %f\n\n",S_Population[i][1]);
-
-
-   printf("Wavelength_L   = %f\t",L_Population[i][0]);
-   printf("FWHM_L  = %f\n\n",L_Population[i][1]);
-
-   printf("Iso_threm_dis  = %f\n\n",Iso_therm_dis[j]);*/
 
 
    Genes[i][0]=LED_Population[i][0];
@@ -65,57 +55,97 @@ for(int i=0;i<chrosome;i++){
    Genes[i][6]=L_Population[i][1];
    Genes[i][7]=Iso_therm_dis[i];
 
-   //Genes[j][7]=0;
-
-   CRI_array[i]=CRI_calculate(Tc,Tc_uv_Slope_const_array,Genes[i][0],Genes[i][1],Genes[i][2],Genes[i][3],Genes[i][4],Genes[i][5],Genes[i][6],Genes[i][7], TCS_width, wavelength_interval, data_length, data_width, CIE1931, TCS,Daylight_SPD_1nm, CRI);
 }
+double iter=0;
+for(int j=0;j<Generation;j++){
+
+        for(int i=0;i<chrosome;i++){
+
+            CRI_array[i]=CRI_calculate(Tc,Tc_uv_Slope_const_array,Genes[i][0],Genes[i][1],Genes[i][2],Genes[i][3],Genes[i][4],Genes[i][5],Genes[i][6],Genes[i][7], TCS_width, wavelength_interval, data_length, data_width, CIE1931, TCS,Daylight_SPD_1nm, CRI);
+
+}
+
   Bubble_sort(chrosome,Genes_number,Genes,CRI_array);
+  double temp=Genes[0][0];
+  double temp1=Genes[0][1];
+  double temp2=Genes[0][2];
+  double temp3=Genes[0][3];
+ // double temp4=Genes[0][4];
+  //double temp5=Genes[0][5];
+ // double temp6=Genes[0][6];
+  double temp7=Genes[0][7];
 
 
+for(int i=Survivors;i<chrosome;i++){
 
-  /* printf("Wavelength_LED = %f\t",Genes[0][0]);
-   printf("FWHM_L  = %f\t",Genes[0][1]);
-   printf("FWHM_R  = %f\n\n",Genes[0][2]);
+        Genes[i][0]=Cross_over(Genes[rand()%Survivors][0],Genes[rand()%Survivors][0],iter,1.0);
+
+     if((Genes[i][0]<(445.0)) || (Genes[i][0]>(455.0))){
+            Genes[i][0]=temp;
+        }
+
+        Genes[i][1]=Cross_over(Genes[rand()%Survivors][1],Genes[rand()%Survivors][1],iter,1);
+
+      if((Genes[i][1]<(6.0)) || (Genes[i][1]>(11.0))){
+            Genes[i][1]=temp1;
+        }
+
+        Genes[i][2]=Cross_over(Genes[rand()%Survivors][2],Genes[rand()%Survivors][2],iter,1);
+
+     if((Genes[i][2]<(13)) || (Genes[i][2]>(16.0))){
+            Genes[i][2]=temp2;
+        }
+
+        Genes[i][3]=Cross_over(Genes[rand()%Survivors][3],Genes[rand()%Survivors][3],iter,1.0);
+
+      if((Genes[i][3]<(520.0)) || (Genes[i][3]>(570))){
+            Genes[i][3]=temp3;
+        }
 
 
-   printf("Wavelength_s   = %f\t",Genes[0][3]);
-   printf("FWHM_s  = %f\n\n",Genes[0][4]);
+        Genes[i][4]=Cross_over(Genes[rand()%Survivors][4],Genes[rand()%Survivors][4],iter,0.1);
+
+           if((Genes[i][4]<0.000138333*Genes[i][3]-0.01222315) || (Genes[i][4]>0.000138333*Genes[i][3]+0.06405685)){
+            Genes[i][4]=0.000138333*Genes[i][3]+0.02591685;
+        }
+        Genes[i][5]=Cross_over(Genes[rand()%Survivors][5],Genes[rand()%Survivors][5],iter,1.0);
+
+         if((Genes[i][5]<(Genes[i][3]/(1.0-(0.0001*Genes[i][3])))) || (Genes[i][5]>Genes[i][3]/(1.0-(0.0003102*Genes[i][3]))) || Genes[i][5]>660 || Genes[i][5]<560){
+            Genes[i][5]=(Genes[i][3]/(1.0-(0.0002051*Genes[i][3])));
+        }
+
+        Genes[i][6]=Cross_over(Genes[rand()%Survivors][6],Genes[rand()%Survivors][6],iter,0.1);
+
+       if((Genes[i][6]<-0.00040385*Genes[i][5]+0.3463523) || (Genes[i][6]>-0.00040385*Genes[i][5]+0.3766523)){
+                Genes[i][6]=-0.00040385*Genes[i][5]+0.3615023;
+       }
 
 
-   printf("Wavelength_L   = %f\t",Genes[0][5]);
-   printf("FWHM_L  = %f\n\n",Genes[0][6]);
-   printf("Iso_threm_dis  = %f\n\n",Genes[0][7]);
-   printf("Best CRI= %f\n\n",CRI_array[0]);*/
+        Genes[i][7]=Cross_over(Genes[rand()%Survivors][7],Genes[rand()%Survivors][7],iter,0.0001);
+           if((Genes[i][7]<(-0.0054)) || (Genes[i][7]>(0.0054))){
+            Genes[i][7]=temp7;
+        }
+
+        temp=Genes[i][0];
+        temp1=Genes[i][1];
+        temp2=Genes[i][2];
+        temp3=Genes[i][3];
+        //temp4=Genes[i][4];
+        //temp5=Genes[i][5];
+       // temp6=Genes[i][6];
+        temp7=Genes[i][7];
+
+}
+
+iter+=1.0;
+
+}
 for(int i=0;i<chrosome;i++){
-   for(int k=0;k<8;k++){
-   Result[i][k]=Genes[i][k];
+   for(int j=0;j<8;j++){
+   Result[i][j]=Genes[i][j];
    }
    Result[i][8]=CRI_array[i];
 }
-
-  /* printf("Wavelength_LED = %f\t",Best_result[i][0]);
-   printf("FWHM_L  = %f\t",Best_result[i][1]);
-   printf("FWHM_R  = %f\n\n",Best_result[i][2]);
-
-
-   printf("Wavelength_s   = %f\t",Best_result[i][3]);
-   printf("FWHM_s  = %f\n\n",Best_result[i][4]);
-
-
-
-   printf("Wavelength_L   = %f\t",Best_result[i][5]);
-   printf("FWHM_L  = %f\n\n",Best_result[i][6]);
-
-   printf("Iso_threm_dis  = %f\n\n",Best_result[i][7]);
-
-   printf("Best CRI= %f\n\n",Best_result[i][8]);*/
-
-
-
-
-
-   // printf("------------------------------------------------------------------------------------------------------------------\n");
-
 
    printf("Tc = %f\n\n",Tc_uv_Slope_const_array[0]);
    printf("Original_u  = %.12f\n\n",Tc_uv_Slope_const_array[1]);
@@ -176,5 +206,14 @@ double Bubble_sort(int length,int width,double Array[length][width],double Targe
 }
 
 
+
+}
+double Cross_over(double Parent1,double Parent2,double iter,double Mutate){
+
+
+    double    Mutation=Mutate*(2.0*rand()/RAND_MAX-1.0)*(1-(iter/8000.0));
+    double    Son=((Parent1+Parent2)/2.0)+Mutation;
+
+    return Son;
 
 }

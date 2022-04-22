@@ -152,14 +152,16 @@ int Daylight_Excelopen(int argc, const char * argv[],int init_value ,int interva
 
         i++;
     }
-   // int k=0;
-   for(int i=0;i<Daylght_length;i+=interval){
+     int k=0;
+
+      for(int i=init_value-379;i<Daylght_length*interval+(init_value-379);i+=interval){
         for(int j=0;j<Daylght_width;j++){
 
-            Daylight_SPD_10nm[i][j]=temp1[i+1][j];
-
+            Daylight_SPD_10nm[i-(init_value-379)-(interval-1)*k][j]=temp1[i][j];
         }
-//k++;
+
+
+            k++;
 
     }
 
