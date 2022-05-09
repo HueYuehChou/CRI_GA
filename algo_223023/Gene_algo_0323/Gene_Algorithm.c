@@ -7,19 +7,20 @@
 #include "Transform_xyuvcd.h"
 
 
-double Genes_Algorithm(int data_length,int data_width,int wavelength_interval,int TCS_width,double CIE1931[data_length][data_width],double TCS[data_length][TCS_width],double Daylight_SPD_1nm[data_length][4]) {
+double Genes_Algorithm(int Lower_limit,int data_length,int data_width,int wavelength_interval,int TCS_width,double CIE1931[data_length][data_width],double TCS[data_length][TCS_width],double Daylight_SPD_1nm[data_length][4]) {
  srand(time(NULL));
+double S_lambda_FWHM_m=0.0014, L_lambda_FWHM_m=-0.00042857,Constant_S_Lambda_FWHM=-0.666,Constant_L_Lambda_FWHM=0.37657055;
+
+
 for(double  therm=0;therm<46;therm+=1.0){
 
-        double Tc=2500+500.0*therm;
+    double Tc=2500+500.0*therm;
 
 
 
-    int LED_genes=3,s_genes=2, L_genes=2,Survivors,Selection_percentage=30;
-    int chrosome=100,Genes_number=8,Generation=8000;
-    double Tc_uv_Slope_const_array[5],Result[chrosome][9];
-
-    double LED_Population[chrosome][LED_genes],S_Population[chrosome][s_genes],L_Population[chrosome][L_genes],Iso_therm_dis[chrosome];
+    int LED_genes=3,s_genes=2, L_genes=2,Survivors,Selection_percentage=40;
+    int chrosome=100,Genes_number=8,Generation=100;
+    double Tc_uv_Slope_const_array[5],Result[chrosome][9],LED_Population[chrosome][LED_genes],S_Population[chrosome][s_genes],L_Population[chrosome][L_genes],Iso_therm_dis[chrosome];
 
     Matrix_randon(chrosome,LED_genes,0,LED_Population);
     Matrix_randon(chrosome,s_genes,1,S_Population);
@@ -28,8 +29,7 @@ for(double  therm=0;therm<46;therm+=1.0){
 
     Iso_therm_dis_rand(chrosome,Iso_therm_dis);
 
-    double S_LED[data_length],S_short[data_length],S_Long[data_length];
-    double CRI,CRI_array[chrosome],Genes[chrosome][8];
+    double S_LED[data_length],S_short[data_length],S_Long[data_length],CRI,CRI_array[chrosome],Genes[chrosome][8];
 
     Survivors=chrosome*Selection_percentage/100;
     /*for(int i=0;i<chrosome;i++){
@@ -37,11 +37,6 @@ for(double  therm=0;therm<46;therm+=1.0){
               printf("%f\t",LED_Population[i][j]);
         printf("\n");
     }*/
-
-
-
-
-
 
 for(int i=0;i<chrosome;i++){
 
@@ -61,24 +56,16 @@ for(int j=0;j<Generation;j++){
 
         for(int i=0;i<chrosome;i++){
 
-            CRI_array[i]=CRI_calculate(Tc,Tc_uv_Slope_const_array,Genes[i][0],Genes[i][1],Genes[i][2],Genes[i][3],Genes[i][4],Genes[i][5],Genes[i][6],Genes[i][7], TCS_width, wavelength_interval, data_length, data_width, CIE1931, TCS,Daylight_SPD_1nm, CRI);
+            CRI_array[i]=CRI_calculate(Tc,Tc_uv_Slope_const_array,Genes[i][0],Genes[i][1],Genes[i][2],Genes[i][3],Genes[i][4],Genes[i][5],Genes[i][6],Genes[i][7], TCS_width,Lower_limit, wavelength_interval, data_length, data_width, CIE1931, TCS,Daylight_SPD_1nm, CRI);
 
 }
 
   Bubble_sort(chrosome,Genes_number,Genes,CRI_array);
-  double temp=Genes[0][0];
-  double temp1=Genes[0][1];
-  double temp2=Genes[0][2];
-  double temp3=Genes[0][3];
- // double temp4=Genes[0][4];
-  //double temp5=Genes[0][5];
- // double temp6=Genes[0][6];
-  double temp7=Genes[0][7];
-
+  double temp=Genes[0][0],temp1=Genes[0][1],temp2=Genes[0][2],temp3=Genes[0][3],temp7=Genes[0][7];
 
 for(int i=Survivors;i<chrosome;i++){
 
-        Genes[i][0]=Cross_over(Genes[rand()%Survivors][0],Genes[rand()%Survivors][0],iter,1.0);
+        Genes[i][0]=Cross_over(Genes[rand()%Survivors][0],Genes[rand()%Survivors][0],iter,1);
 
      if((Genes[i][0]<(445.0)) || (Genes[i][0]>(455.0))){
             Genes[i][0]=temp;
@@ -92,36 +79,35 @@ for(int i=Survivors;i<chrosome;i++){
 
         Genes[i][2]=Cross_over(Genes[rand()%Survivors][2],Genes[rand()%Survivors][2],iter,1);
 
-     if((Genes[i][2]<(13)) || (Genes[i][2]>(16.0))){
+     if((Genes[i][2]<(8.0)) || (Genes[i][2]>(16.0))){
             Genes[i][2]=temp2;
         }
 
-        Genes[i][3]=Cross_over(Genes[rand()%Survivors][3],Genes[rand()%Survivors][3],iter,1.0);
+        Genes[i][3]=Cross_over(Genes[rand()%Survivors][3],Genes[rand()%Survivors][3],iter,1);
 
       if((Genes[i][3]<(520.0)) || (Genes[i][3]>(570))){
             Genes[i][3]=temp3;
         }
 
-
         Genes[i][4]=Cross_over(Genes[rand()%Survivors][4],Genes[rand()%Survivors][4],iter,0.1);
 
-           if((Genes[i][4]<0.000138333*Genes[i][3]-0.01222315) || (Genes[i][4]>0.000138333*Genes[i][3]+0.06405685)){
-            Genes[i][4]=0.000138333*Genes[i][3]+0.02591685;
+           if((Genes[i][4]<S_lambda_FWHM_m*Genes[i][3]+Constant_S_Lambda_FWHM-0.03814) || (Genes[i][4]>S_lambda_FWHM_m*Genes[i][3]+Constant_S_Lambda_FWHM+0.03814)){
+            Genes[i][4]=S_lambda_FWHM_m*Genes[i][3]+Constant_S_Lambda_FWHM;
         }
-        Genes[i][5]=Cross_over(Genes[rand()%Survivors][5],Genes[rand()%Survivors][5],iter,1.0);
+        Genes[i][5]=Cross_over(Genes[rand()%Survivors][5],Genes[rand()%Survivors][5],iter,1);
 
-         if((Genes[i][5]<(Genes[i][3]/(1.0-(0.0001*Genes[i][3])))) || (Genes[i][5]>Genes[i][3]/(1.0-(0.0003102*Genes[i][3]))) || Genes[i][5]>660 || Genes[i][5]<560){
+         if((Genes[i][5]<(Genes[i][3]/(1.0-(0.0001*Genes[i][3])))) || (Genes[i][5]>Genes[i][3]/(1.0-(0.0003102*Genes[i][3]))) || Genes[i][5]<570 || Genes[i][5]>660){
             Genes[i][5]=(Genes[i][3]/(1.0-(0.0002051*Genes[i][3])));
         }
 
         Genes[i][6]=Cross_over(Genes[rand()%Survivors][6],Genes[rand()%Survivors][6],iter,0.1);
 
-       if((Genes[i][6]<-0.00040385*Genes[i][5]+0.3463523) || (Genes[i][6]>-0.00040385*Genes[i][5]+0.3766523)){
-                Genes[i][6]=-0.00040385*Genes[i][5]+0.3615023;
+       if((Genes[i][6]<L_lambda_FWHM_m*Genes[i][5]+Constant_L_Lambda_FWHM-0.01515) || (Genes[i][6]>L_lambda_FWHM_m*Genes[i][5]+Constant_L_Lambda_FWHM+0.01515)){
+                Genes[i][6]=L_lambda_FWHM_m*Genes[i][5]+Constant_L_Lambda_FWHM;
        }
 
 
-        Genes[i][7]=Cross_over(Genes[rand()%Survivors][7],Genes[rand()%Survivors][7],iter,0.0001);
+        Genes[i][7]=Cross_over(Genes[rand()%Survivors][7],Genes[rand()%Survivors][7],iter,0.001);
            if((Genes[i][7]<(-0.0054)) || (Genes[i][7]>(0.0054))){
             Genes[i][7]=temp7;
         }
@@ -211,7 +197,7 @@ double Bubble_sort(int length,int width,double Array[length][width],double Targe
 double Cross_over(double Parent1,double Parent2,double iter,double Mutate){
 
 
-    double    Mutation=Mutate*(2.0*rand()/RAND_MAX-1.0)*(1-(iter/8000.0));
+    double    Mutation=Mutate*(2.0*rand()/RAND_MAX-1.0)*(1-(iter/15000.0));
     double    Son=((Parent1+Parent2)/2.0)+Mutation;
 
     return Son;

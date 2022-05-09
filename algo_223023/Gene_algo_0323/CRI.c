@@ -11,10 +11,11 @@
 #include<time.h>
 #include <stdlib.h>
 #include"Spectrum_Equation.h"
+#include "Differential.h"
 
 
 
-double CRI_calculate(double Tc,double Tc_uv_Slope_const_array[5],double LED_wavelength,double LED_FWHM_L,double LED_FWHM_R,double Short_wavelength,double Short_FWHM,double Long_wavelength,double Long_FWHM, double uv_interval,int TCS_width,int wavelength_interval,int data_length,int data_width,double CIE1931[data_length][data_width],double TCS[data_length][TCS_width],double Daylight_SPD_1nm[data_length][4],double CRI){
+double CRI_calculate(double Tc,double Tc_uv_Slope_const_array[5],double LED_wavelength,double LED_FWHM_L,double LED_FWHM_R,double Short_wavelength,double Short_FWHM,double Long_wavelength,double Long_FWHM, double uv_interval,int TCS_width,int lower_limit,int wavelength_interval,int data_length,int data_width,double CIE1931[data_length][data_width],double TCS[data_length][TCS_width],double Daylight_SPD_1nm[data_length][4],double CRI){
 
 double S_illuminant[data_length],S_illuminant_diff[data_length],Tristimulus_temp_illuminant[3],Tristimulus_temp_illuminant_diff[3],Tristimulus_temp_LED[3],Tristimulus_temp_S[3],Tristimulus_temp_L[3];
 
@@ -46,32 +47,6 @@ for(int j=0;j<data_length;j++){
 
 
          }
-    /*  for(int i=0;i<data_length;i++){
-        for(int j=0;j<4;j++){
-                printf("%f\t",CIE1931[i][j]);
-        }
-        printf("\n");
-    }*/
-
-/*printf("-------------------------------------------Sillu---------------------------------------------\n\n");
-  for(int k=0;k<data_length;k++){
-
-        printf("%.8f\n",S_illuminant[k]);
-
-   }
-   /*printf("------------------------------------------SS---------------------------------------------------\n\n");
-       for(int k=0;k<data_length;k++){
-
-        printf("%.8f\n",S_short[k]);
-
-   }
-   printf("------------------------------------------SL---------------------------------------------------\n\n");
-       for(int k=0;k<data_length;k++){
-
-        printf("%.8f\n",S_Long[k]);
-
-   }
-   printf("---------------------------------------------------------------------------------------------\n\n");*/
 
 
 
@@ -157,10 +132,9 @@ for(int j=0;j<data_length;j++){
    // printf("x = %.8f\t",xy_new[0]);
    // printf("y = %.8f\n\n",xy_new[1];
 
-   Bluerate_APSL(Tristimulus_temp_LED, Tristimulus_temp_S,Tristimulus_temp_L,xy_new,APSL_array);
 
-  // printf("APS=%.12f\n",APSL_array[0]);
 
+  Bluerate_APSL(Tristimulus_temp_LED, Tristimulus_temp_S,Tristimulus_temp_L,xy_new,APSL_array);
 
 
    // printf("APL=%.12f\n\n",APSL_array[1]);
@@ -175,11 +149,33 @@ for(int j=0;j<data_length;j++){
 
 
     S_total(data_length,APSL_array,S_LED,S_short,S_Long,S_total_array);
-   /* for(int k=0;k<data_length;k++){
-            printf("%.8f\n",S_total_array[k]);
+
+    int YAG_S_Peak_index=round(Short_wavelength)-lower_limit;
+    int YAG_L_Peak_index=round(Long_wavelength)-lower_limit;
+    //printf("YAG_S_Peak_index=%d\n",YAG_S_Peak_index);
+   // printf("YAG_L_Peak_index=%d\n",YAG_L_Peak_index);
 
 
-    }*/
+    double S_total_1order_diff_array[YAG_L_Peak_index-YAG_S_Peak_index-1],S_total_2order_diff_array[YAG_L_Peak_index-YAG_S_Peak_index-2];
+
+ for(int k=YAG_S_Peak_index;k<YAG_L_Peak_index;k++){
+
+              S_total_1order_diff_array[k-YAG_S_Peak_index]= Firstorder_differential(S_total_array[k+1],S_total_array[k],1);
+            //  printf("%f\n",S_total_1order_diff_array[k]);
+
+    }
+     for(int k=0;k<YAG_L_Peak_index-YAG_S_Peak_index-2;k++){
+
+              S_total_2order_diff_array[k]= Secondorder_differential(S_total_1order_diff_array[k+1],S_total_1order_diff_array[k],1);
+            //  printf("%f\n",S_total_2order_diff_array[k]);
+              if(S_total_2order_diff_array[k]>0){
+                CRI=0;
+                return CRI;
+              }
+    }
+
+
+
 
     double Tristimulus_temp_S_total[3],S_total_xy_array[2],S_total_uv_array[2],S_total_cd_array[2],Illuminant_cd_array[2],uv_prime_ki[2],uv_prime_ri[2];
 

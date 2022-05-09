@@ -72,7 +72,7 @@ k+=1.0;
 
 
 
-    Genes_Algorithm(data_length,data_width,wavelength_interval,TCS_width,CIE1931,TCS,Daylight_SPD_1nm);
+    Genes_Algorithm(wavelength_lower_limit,data_length,data_width,wavelength_interval,TCS_width,CIE1931,TCS,Daylight_SPD_1nm);
 
     return 0;
 }
