@@ -2,7 +2,9 @@
 
 
 
-double iso_therm_line(double u,double v,double X,double Y,double Z,double X_diff,double Y_diff,double Z_diff,double interval,double uv_new[2],double Slope_const_array[2]){
+double iso_therm_line(double u,double v,double X,double Y,double Z
+                      ,double X_diff,double Y_diff,double Z_diff,double interval,
+                      double uv_new[2],double Slope_const_array[2]){
 
     double m;
 
@@ -32,12 +34,6 @@ double iso_therm_line(double u,double v,double X,double Y,double Z,double X_diff
     v=m*(u+interval)+constant;
     uv_new[0]=u+interval;
     uv_new[1]=v;
-
-
-
-
-
-
 
 
 

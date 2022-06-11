@@ -21,7 +21,7 @@ for(double  therm=0;therm<Tc_point;therm+=1.0){
 
 
     int LED_genes=3,s_genes=2, L_genes=2,Survivors,Selection_percentage=40;
-    int chrosome=100,Genes_number=8,Generation=100;
+    int chrosome=100,Genes_number=8,Generation=130000;
     double Tc_uv_Slope_const_array[5],Result[chrosome][9],LED_Population[chrosome][LED_genes],S_Population[chrosome][s_genes],L_Population[chrosome][L_genes],Iso_therm_dis[chrosome];
 
     double LM_array[9];
@@ -57,11 +57,11 @@ for(int j=0;j<Generation;j++){
 
             CRI_array[i]=CRI_calculate(Constrain_Flag,Tc,Tc_uv_Slope_const_array,Genes[i][0],Genes[i][1],Genes[i][2],Genes[i][3],Genes[i][4],Genes[i][5],Genes[i][6],Genes[i][7], TCS_width,Lower_limit, wavelength_interval, data_length, data_width, CIE1931, TCS,Daylight_SPD_1nm);
             //printf("%d\n",Constrain_Flag[0]);
-            if(Constrain_Flag[0]==1){
+          //  if(Constrain_Flag[0]==1){
 
-            CRI_array[i]=0;
-            }
-            Constrain_Flag[0]=-1;
+           // CRI_array[i]=0;
+        //    }
+        //    Constrain_Flag[0]=-1;
 }
 
   Bubble_sort(chrosome,Genes_number,Genes,CRI_array);
@@ -77,14 +77,20 @@ for(int i=Survivors;i<chrosome;i++){
 
         Genes[i][1]=Cross_over(Genes[rand()%Survivors][1],Genes[rand()%Survivors][1],iter,1);
 
-      if((Genes[i][1]<(6.0)) || (Genes[i][1]>(11.0))){
+     /* if((Genes[i][1]<(6.0)) || (Genes[i][1]>(11.0))){
             Genes[i][1]=temp1;
+        }*/
+        if(Genes[i][1]!=11.0){
+            Genes[i][1]=11.0;
         }
 
         Genes[i][2]=Cross_over(Genes[rand()%Survivors][2],Genes[rand()%Survivors][2],iter,1);
 
-     if((Genes[i][2]<(8.0)) || (Genes[i][2]>(16.0))){
+    /* if((Genes[i][2]<(8.0)) || (Genes[i][2]>(16.0))){
             Genes[i][2]=temp2;
+        }*/
+         if(Genes[i][2]!=16.0){
+            Genes[i][2]=16.0;
         }
 
         Genes[i][3]=Cross_over(Genes[rand()%Survivors][3],Genes[rand()%Survivors][3],iter,1);
@@ -161,7 +167,7 @@ for(int i=0;i<chrosome;i++){
       for (int v=0; v<9; v++)
           LM_array[v]=Result[0][v];
 
-   LM_Algorithm(LM_array,Tc,Tc_uv_Slope_const_array,TCS_width,Lower_limit, wavelength_interval, data_length, data_width, CIE1931, TCS,Daylight_SPD_1nm);
+  // LM_Algorithm(LM_array,Tc,Tc_uv_Slope_const_array,TCS_width,Lower_limit, wavelength_interval, data_length, data_width, CIE1931, TCS,Daylight_SPD_1nm);
 
 }
 
@@ -196,7 +202,7 @@ double Bubble_sort(int length,int width,double Array[length][width],double Targe
 double Cross_over(double Parent1,double Parent2,double iter,double Mutate){
 
 
-    double    Mutation=Mutate*(2.0*rand()/RAND_MAX-1.0)*(1-(iter/50000.0));
+    double    Mutation=Mutate*(2.0*rand()/RAND_MAX-1.0)*(1-(iter/130000.0));
     double    Son=((Parent1+Parent2)/2.0)+Mutation;
 
     return Son;

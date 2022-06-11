@@ -52,22 +52,12 @@ double  Illuminant_Daylight_spectrum(double Tc,double S0,double S1,double S2){
 
 
     return S_Daylight;
-
-
-
-
-
-
-
 }
-
-
-
 
 double  Illuminant_spectrum_differential(double Tc,double lambda){
 
 
-    double c1= 3.74183e-16;
+    double c1= 3.7417449e-16;
     double c2= 1.4388e-2;
     double Illuminant_spec_diff;
     double a,b,c,d,e,f,g;
@@ -79,7 +69,6 @@ double  Illuminant_spectrum_differential(double Tc,double lambda){
        b=(c1*c2)/(Tc*Tc);
        c=lambda*Tc*1e-9;
        d=b/a;
-       g=c2/c;
        e=d*exp(c2/c);
        f=(exp(c2/c)-1)*(exp(c2/c)-1);
 

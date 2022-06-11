@@ -21,26 +21,26 @@ double CRI_calculate(int Constrain_Flag[1],double Tc,double Tc_uv_Slope_const_ar
                      double CIE1931[data_length][data_width],double TCS[data_length][TCS_width],double Daylight_SPD_1nm[data_length][4]){
     Constrain_Flag[0]=0;
 
-if(LED_wavelength<=445.0 || LED_wavelength>=455.0 || LED_FWHM_L<=6.0 ||  LED_FWHM_L>=11.0 ||LED_FWHM_R <=8.0
-   ||LED_FWHM_R>=16.0 || Short_wavelength<=520 ||Short_wavelength>=570
-   || Short_FWHM<=0.0014*Short_wavelength-0.666-0.03814
-  ||Short_FWHM>=0.0014*Short_wavelength-0.666+0.03814
-  ||Long_wavelength<= Short_wavelength/(1.0-(0.0001*Short_wavelength))
-  || Long_wavelength>=Short_wavelength/(1.0-(0.0003102*Short_wavelength))
-   ||Long_FWHM<= -0.00042857*Long_wavelength+0.37657055-0.01515
-   || Long_FWHM>= -0.00042857*Long_wavelength+0.37657055+0.01515||
-   uv_interval <=-0.0054|| uv_interval>=0.0054)
+if(LED_wavelength<445.0 || LED_wavelength>455.0 || LED_FWHM_L<6.0 ||  LED_FWHM_L>11.0 ||LED_FWHM_R <8.0
+   ||LED_FWHM_R>16.0 || Short_wavelength<520 ||Short_wavelength>=570
+   || Short_FWHM<0.0014*Short_wavelength-0.666-0.03814
+  ||Short_FWHM>0.0014*Short_wavelength-0.666+0.03814
+  ||Long_wavelength< Short_wavelength/(1.0-(0.0001*Short_wavelength))
+  || Long_wavelength>Short_wavelength/(1.0-(0.0003102*Short_wavelength))
+   ||Long_FWHM< -0.00042857*Long_wavelength+0.37657055-0.01515
+   || Long_FWHM> -0.00042857*Long_wavelength+0.37657055+0.01515||
+   uv_interval <-0.0054|| uv_interval>0.0054)
 {
-//double CRI=0;
-//return CRI ;
-Constrain_Flag[0]=1;
+double CRI=0;
+return CRI ;
+//Constrain_Flag[0]=1;
 }
 //printf("CRI FLAG1=%d\n",Constrain_Flag[0]);
 double CRI,S_illuminant[data_length],S_illuminant_diff[data_length],Tristimulus_temp_illuminant[3],Tristimulus_temp_illuminant_diff[3],Tristimulus_temp_LED[3],Tristimulus_temp_S[3],Tristimulus_temp_L[3];
 
 double Illuminant_xy_array[2],S_TCS_UVW_array[3],S_ILLU_UVW_array[3],S_LED[data_length],S_short[data_length],S_Long[data_length];
 
-
+double Black_body_SPD[data_length],Black_body_Tristim[3],Black_body_xy_array[2];
 
 for(int j=0;j<data_length;j++){
 
@@ -53,10 +53,11 @@ for(int j=0;j<data_length;j++){
 
   if(Tc<=5000.0){
    S_illuminant[j]=Illuminant_Planck_spectrum(Tc,CIE1931[j][0]);
+   Black_body_SPD[j]=S_illuminant[j];
    }
   else{
    S_illuminant[j]=Illuminant_Daylight_spectrum(Tc,Daylight_SPD_1nm[j][1],Daylight_SPD_1nm[j][2],Daylight_SPD_1nm[j][3]);
-
+   Black_body_SPD[j]=Illuminant_Planck_spectrum(Tc,CIE1931[j][0]);
   }
 
    S_illuminant_diff[j]=Illuminant_spectrum_differential(Tc,CIE1931[j][0]);
@@ -67,9 +68,12 @@ for(int j=0;j<data_length;j++){
 
    Spectrum2XYZ(wavelength_interval,data_length,data_width,CIE1931,S_illuminant,Tristimulus_temp_illuminant);
 
+    Spectrum2XYZ(wavelength_interval,data_length,data_width,CIE1931,Black_body_SPD,Black_body_Tristim);//ºâ±×²v
+
    Spectrum2XYZ(wavelength_interval,data_length,data_width,CIE1931,S_illuminant_diff,Tristimulus_temp_illuminant_diff);
 
    XYZ2xy(Tristimulus_temp_illuminant,Illuminant_xy_array);
+   XYZ2xy(Black_body_Tristim,Black_body_xy_array);// ¶ÂÅé¿ç®gxy
 
    Spectrum2XYZ(wavelength_interval,data_length,data_width,CIE1931,S_LED,Tristimulus_temp_LED);
 
@@ -84,15 +88,18 @@ for(int j=0;j<data_length;j++){
 
    XYZ2xy(Tristimulus_temp_L,Long_xy_array);
 
-    double Illuminant_uv_array[2],APSL_array[2],uv_new[2],xy_new[2],Slope_const_array[2];
+    double Illuminant_uv_array[2],APSL_array[2],uv_new[2],xy_new[2],Slope_const_array[2],Black_body_uv[2];
 
 
    xytouv(Illuminant_xy_array[0],Illuminant_xy_array[1],Illuminant_uv_array);
+   xytouv(Black_body_xy_array[0],Black_body_xy_array[1],Black_body_uv);
    Tc_uv_Slope_const_array[0]=Tc;
-   Tc_uv_Slope_const_array[1]=Illuminant_uv_array[0];
-   Tc_uv_Slope_const_array[2]=Illuminant_uv_array[1];
+   Tc_uv_Slope_const_array[1]=Black_body_uv[0];
+   Tc_uv_Slope_const_array[2]=Black_body_uv[1];
 
-   iso_therm_line(Illuminant_uv_array[0],Illuminant_uv_array[1],Tristimulus_temp_illuminant[0],Tristimulus_temp_illuminant[1],Tristimulus_temp_illuminant[2],Tristimulus_temp_illuminant_diff[0],Tristimulus_temp_illuminant_diff[1],Tristimulus_temp_illuminant_diff[2],uv_interval,uv_new,Slope_const_array);
+   iso_therm_line(Black_body_uv[0],Black_body_uv[1],Black_body_Tristim[0],Black_body_Tristim[1],
+                  Black_body_Tristim[2],Tristimulus_temp_illuminant_diff[0],Tristimulus_temp_illuminant_diff[1],
+                  Tristimulus_temp_illuminant_diff[2],uv_interval,uv_new,Slope_const_array);
 
    Tc_uv_Slope_const_array[3]=Slope_const_array[0];
    Tc_uv_Slope_const_array[4]=Slope_const_array[1];
@@ -126,9 +133,9 @@ for(int j=0;j<data_length;j++){
               S_total_2order_diff_array[k]= Differential(S_total_1order_diff_array[k+1],S_total_1order_diff_array[k],1);
 
               if(S_total_2order_diff_array[k]>0){
-                //CRI=0;
-                //return CRI;
-                Constrain_Flag[0]=1;
+                CRI=0;
+                return CRI;
+                //Constrain_Flag[0]=1;
               }
     }
     //printf("CRI FLAG2=%d\n",Constrain_Flag[0]);

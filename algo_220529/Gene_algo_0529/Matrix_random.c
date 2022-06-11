@@ -28,9 +28,11 @@ for(int i=0;i<data_width;i++){
                 if(i==0)// Blue light LED wavelength
                 Population[j][i] = genes_range(LED_wavelength_min,LED_wavelength_max);
                 else if(i==1) // Left FWHM
-                Population[j][i] = genes_range(6,11);
+                //Population[j][i] = genes_range(6,11);
+                 Population[j][i] = 11;
                 else         //Right FWHM
-                Population[j][i] = genes_range(8,16);
+                //Population[j][i] = genes_range(8,16);
+                Population[j][i] = 16;
         }
     }
 }
