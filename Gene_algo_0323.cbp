@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Gene_algo_0323" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Gene_algo_0323" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Gene_algo_0323" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="Bluerate_APSL.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Bluerate_APSL.h" />
+		<Unit filename="CCT2xy.csv" />
+		<Unit filename="CRI.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="CRI.h" />
+		<Unit filename="DaylightCIECalculator.csv" />
+		<Unit filename="Delta_Ei.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Delta_Ei.h" />
+		<Unit filename="Differential.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Differential.h" />
+		<Unit filename="Excel_fileopen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Excel_fileopen.h" />
+		<Unit filename="Gene_Algorithm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Gene_Algorithm.h" />
+		<Unit filename="Illuminant_spectrum.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Illuminant_spectrum.h" />
+		<Unit filename="Inverse_Matrix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Inverse_Matrix.h" />
+		<Unit filename="Iso_therm_line.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Iso_therm_line.h" />
+		<Unit filename="LM_Algorithm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LM_Algorithm.h" />
+		<Unit filename="Linear_interpolation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Linear_interpolation.h" />
+		<Unit filename="Matrix_random.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Matrix_random.h" />
+		<Unit filename="S_total.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="S_total.h" />
+		<Unit filename="Spectrum_Equation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Spectrum_Equation.h" />
+		<Unit filename="TCS_1nm_data.csv" />
+		<Unit filename="Transform_xyuvcd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Transform_xyuvcd.h" />
+		<Unit filename="Tristimulus_values.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Tristimulus_values.h" />
+		<Unit filename="XYZ2xy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="XYZ2xy.h" />
+		<Unit filename="all_1nm_data.csv" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="uv_i_toUVW.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="uv_i_toUVW.h" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
